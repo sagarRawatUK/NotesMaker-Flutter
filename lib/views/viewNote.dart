@@ -54,31 +54,16 @@ class _ViewNoteState extends State<ViewNote> {
               })
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: textFieldColor,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
-              child: Text(
-                widget.note.title,
-                style: titleTextStyle(),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: Container(
+      body: Builder(builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -86,17 +71,34 @@ class _ViewNoteState extends State<ViewNote> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
                 child: Text(
-                  widget.note.description,
+                  widget.note.title,
                   style: titleTextStyle(),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
-      ),
+              SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: textFieldColor,
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+                  child: Text(
+                    widget.note.description,
+                    style: titleTextStyle(),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

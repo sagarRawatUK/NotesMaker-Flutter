@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 const Color appBarColor = Colors.white;
 const Color iconColor = Colors.black;
 const Color bgColor = Colors.white;
-const Color borderColor = Colors.grey;
+final Color borderColor = Colors.grey[800];
 final Color themeMainColor = Colors.amber[300];
 final Color textFieldColor = Colors.grey[200];
 final Color themeSecondaryColor = Colors.white;

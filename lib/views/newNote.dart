@@ -34,6 +34,10 @@ class _NewNoteState extends State<NewNote> {
     // }
   }
 
+  void _showSnackBar(BuildContext context, String message) {
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,107 +48,105 @@ class _NewNoteState extends State<NewNote> {
           style: appBarTextStyle(),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: textFieldColor,
+      body: Builder(builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: textFieldColor,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                child: TextFormField(
+                  style: inputTextStyle(),
+                  controller: titleTextController,
+                  decoration: InputDecoration(
+                    hintText: "Title",
+                    hintStyle: hintTextStyle(),
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-              child: TextFormField(
-                style: inputTextStyle(),
-                controller: titleTextController,
-                decoration: InputDecoration(
-                  hintText: "Title",
-                  hintStyle: hintTextStyle(),
-                  border: InputBorder.none,
-                ),
+              SizedBox(
+                height: 15,
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: textFieldColor,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: TextField(
-                    style: inputTextStyle(),
-                    controller: descriptionTextController,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      hintText: "Description",
-                      hintStyle: hintTextStyle(),
-                      border: InputBorder.none,
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 15,
-                    ),
+              Expanded(
+                child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: textFieldColor),
-                    child: Text(
-                      "Cancel",
-                      style: buttonTextStyle(),
+                      borderRadius: BorderRadius.circular(10),
+                      color: textFieldColor,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: TextField(
+                      style: inputTextStyle(),
+                      controller: descriptionTextController,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        hintText: "Description",
+                        hintStyle: hintTextStyle(),
+                        border: InputBorder.none,
+                      ),
+                    )),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: textFieldColor),
+                      child: Text(
+                        "Cancel",
+                        style: buttonTextStyle(),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _saveNote();
-                    Navigator.pop(context,true);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 15,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: themeMainColor),
-                    child: Text(
-                      "Save",
-                      style: buttonTextStyle(),
-                    ),
+                  SizedBox(
+                    width: 10,
                   ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
+                  GestureDetector(
+                    onTap: () {
+                      _saveNote();
+                      Navigator.pop(context, true);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: themeMainColor),
+                      child: Text(
+                        "Save",
+                        style: buttonTextStyle(),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
-}
-
-void _showSnackBar(BuildContext context, String message) {
-  Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
 }

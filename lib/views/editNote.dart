@@ -25,13 +25,6 @@ class _NoteEditorState extends State<NoteEditor> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    titleTextController.addListener(() {});
-    descriptionTextController.addListener(() {});
-  }
-
   void _saveNote() async {
     note = Note.withId(widget.oldNote.id, "", "", 1);
     note.priority = 1;
@@ -50,6 +43,14 @@ class _NoteEditorState extends State<NoteEditor> {
     Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
+  _updateTitle() {
+    note.title = titleTextController.text;
+  }
+
+  _updateDescription() {
+    note.title = descriptionTextController.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     titleTextController.text = widget.oldNote.title;
@@ -64,112 +65,110 @@ class _NoteEditorState extends State<NoteEditor> {
           style: appBarTextStyle(),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: textFieldColor,
+      body: Builder(builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: textFieldColor,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                child: TextFormField(
+                  onChanged: (text) => _updateTitle,
+                  style: inputTextStyle(),
+                  controller: titleTextController,
+                  // initialValue: widget.oldNote.title,
+                  decoration: InputDecoration(
+                    hintText: "Title",
+                    hintStyle: hintTextStyle(),
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-              child: TextFormField(
-                // onChanged: (text) {
-                //   titleTextController.text = text;
-                // },
-                style: inputTextStyle(),
-                controller: titleTextController,
-                // initialValue: widget.oldNote.title,
-                decoration: InputDecoration(
-                  hintText: "Title",
-                  hintStyle: hintTextStyle(),
-                  border: InputBorder.none,
-                ),
+              SizedBox(
+                height: 15,
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: textFieldColor,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                  child: TextFormField(
-                    // onChanged: (text) {
-                    //   descriptionTextController.text = text;
-                    // },
-                    style: inputTextStyle(),
-                    controller: descriptionTextController,
-                    // initialValue: widget.oldNote.description,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      hintText: "Description",
-                      hintStyle: hintTextStyle(),
-                      border: InputBorder.none,
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 15,
-                    ),
+              Expanded(
+                child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: textFieldColor),
-                    child: Text(
-                      "Cancel",
-                      style: buttonTextStyle(),
+                      borderRadius: BorderRadius.circular(10),
+                      color: textFieldColor,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                    child: TextFormField(
+                      onChanged: (text) => _updateDescription,
+                      style: inputTextStyle(),
+                      controller: descriptionTextController,
+                      // initialValue: widget.oldNote.description,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        hintText: "Description",
+                        hintStyle: hintTextStyle(),
+                        border: InputBorder.none,
+                      ),
+                    )),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: textFieldColor),
+                      child: Text(
+                        "Cancel",
+                        style: buttonTextStyle(),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _saveNote();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 15,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: themeMainColor),
-                    child: Text(
-                      "Save",
-                      style: buttonTextStyle(),
-                    ),
+                  SizedBox(
+                    width: 10,
                   ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
+                  GestureDetector(
+                    onTap: () {
+                      _saveNote();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: themeMainColor),
+                      child: Text(
+                        "Save",
+                        style: buttonTextStyle(),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }
